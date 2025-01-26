@@ -5,24 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.home.HomeFragment">
-<!--    tools:ignore="MissingClass">-->
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:text="@string/home_button" />
+    tools:context=".ui.database.DatabaseFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/fragmentRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
         android:layout_weight="1" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@android:color/white" />
 
 </LinearLayout>

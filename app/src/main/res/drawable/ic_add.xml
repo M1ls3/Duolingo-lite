@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48.0"
+    android:viewportHeight="48.0">
+
+    <!-- Горизонтальна лінія плюса -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="8"
+        android:pathData="M0,24h50" />
+
+    <!-- Вертикальна лінія плюса -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="8"
+        android:pathData="M24,0v50" />
+</vector>
+
+
+
+

@@ -1,0 +1,57 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:layout_marginBottom="5dp">
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Word"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#8B0000"
+    />
+
+    <TextView
+        android:id="@+id/countryInfoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Translate"
+        android:textSize="18sp"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="4dp">
+
+        <Button
+            android:id="@+id/buttonEdit"
+            android:layout_width="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/buttonTranslate"
+            android:layout_width="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content"
+            android:text="Translate" />
+    </LinearLayout>
+</LinearLayout>
