@@ -3,6 +3,7 @@ import androidx.room.Dao
 import androidx.room.*
 import com.example.duolingolite.data.Word
 
+@Dao
 interface Dao  {
     // Вставка або оновлення запису в таблиці
     @Insert(onConflict = OnConflictStrategy.REPLACE)
