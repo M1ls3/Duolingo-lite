@@ -19,4 +19,8 @@ class Repo(private val dao: Dao) {
     suspend fun getAllWords(): List<Word>{
         return dao.getAllWords()
     }
+
+    suspend fun getRandomWord(): Word {
+        return dao.getRandomWord()
+    }
 }

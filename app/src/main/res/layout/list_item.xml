@@ -7,7 +7,7 @@
     android:layout_marginBottom="5dp">
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/wordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Word"
@@ -17,7 +17,7 @@
     />
 
     <TextView
-        android:id="@+id/countryInfoTextView"
+        android:id="@+id/translateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Translate"

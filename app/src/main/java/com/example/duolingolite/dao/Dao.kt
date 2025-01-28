@@ -15,8 +15,9 @@ interface Dao  {
     @Delete
     suspend fun deleteWord(word: Word)
 
-    // Отримання всіх записів
-    @Transaction
-    @Query("SELECT * FROM words")
+    @Query("SELECT * FROM words ORDER BY word ASC")
     suspend fun getAllWords(): List<Word>
+
+    @Query("SELECT * FROM words ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomWord(): Word
 }
