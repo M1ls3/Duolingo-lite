@@ -13,7 +13,7 @@ class WordAdapter(
     private var showButtons: Boolean = true,
     private var onEditClick: (Word) -> Unit,
     private var onDeleteClick: (Word) -> Unit,
-    private var omTranslateClick: (Word) -> Unit
+    private var onTranslateClick: (Word) -> Unit
 ) : RecyclerView.Adapter<WordViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
@@ -40,7 +40,7 @@ class WordAdapter(
             holder.deleteButton.visibility = View.GONE
             holder.translateButton.visibility = View.VISIBLE
 
-            holder.translateButton.setOnClickListener { omTranslateClick(item) }
+            holder.translateButton.setOnClickListener { onTranslateClick(item) }
         }
     }
 
