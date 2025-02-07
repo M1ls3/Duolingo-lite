@@ -59,7 +59,7 @@ class DatabaseFragment : Fragment() {
 
         // Спостерігаємо за змінами в LiveData з ViewModel
         viewModel.wordItems.observe(viewLifecycleOwner, { items ->
-            adapter.updateData(items)
+            adapter.updateData(items, true)
         })
 
         // Додаємо дію для кнопки додавання нового слова

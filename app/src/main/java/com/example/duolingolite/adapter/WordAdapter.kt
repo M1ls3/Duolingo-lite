@@ -11,6 +11,7 @@ import com.example.duolingolite.viewholder.WordViewHolder
 class WordAdapter(
     private var items: List<Word>,
     private var showButtons: Boolean = true,
+    private var showTranslate: Boolean = false,
     private var onEditClick: (Word) -> Unit,
     private var onDeleteClick: (Word) -> Unit,
     private var onTranslateClick: (Word) -> Unit
@@ -26,7 +27,13 @@ class WordAdapter(
         val item = items[position]
 
         holder.wordTextView.text = item.word
-        holder.translateTextView.text = item.translate
+        // Контролюємо видимість тексту перекладу
+        if (showTranslate) {
+            holder.translateTextView.text = item.translate
+            holder.translateTextView.visibility = View.VISIBLE
+        } else {
+            holder.translateTextView.visibility = View.GONE
+        }
 
         if (showButtons) {
             holder.editButton.visibility = View.VISIBLE
@@ -40,6 +47,7 @@ class WordAdapter(
             holder.deleteButton.visibility = View.GONE
             holder.translateButton.visibility = View.VISIBLE
 
+            // Обробка кліку по кнопці "Translate" у елементі списку
             holder.translateButton.setOnClickListener { onTranslateClick(item) }
         }
     }
@@ -49,6 +57,13 @@ class WordAdapter(
     // Оновлення даних у списку
     fun updateData(newItems: List<Word>) {
         items = newItems
+        notifyDataSetChanged()
+    }
+
+    // Оновлення даних у списку
+    fun updateData(newItems: List<Word>, showTranslate: Boolean) {
+        items = newItems
+        this.showTranslate = showTranslate
         notifyDataSetChanged()
     }
 }
