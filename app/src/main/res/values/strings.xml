@@ -11,5 +11,6 @@
     <string name="menu_db">Database</string>
     <string name="menu_slideshow">Slideshow</string>
 
-    <string name="home_button">RANDOM </string>
+    <string name="home_button">RANDOM</string>
+
 </resources>

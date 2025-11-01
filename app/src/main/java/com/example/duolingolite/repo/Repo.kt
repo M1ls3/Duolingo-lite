@@ -23,4 +23,12 @@ class Repo(private val dao: Dao) {
     suspend fun getRandomWord(): Word {
         return dao.getRandomWord()
     }
+
+    suspend fun getAllWordsByTopic(topic: String): List<Word>{
+        return dao.getWordsByTopic(topic)
+    }
+
+    suspend fun getAllTopics(): List<String>{
+        return dao.getAllTopics()
+    }
 }

@@ -7,9 +7,33 @@
     android:orientation="vertical"
     tools:context=".ui.database.DatabaseFragment">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" >
+
+    <Spinner
+        android:id="@+id/fragmentSpinner"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDeleteTopic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:src="@drawable/ic_delete_topic_db"
+        app:tint="@android:color/white" />
+
+</LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentRecyclerView"
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_gravity="center_horizontal"

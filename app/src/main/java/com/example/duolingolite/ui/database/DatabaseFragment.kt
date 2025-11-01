@@ -52,7 +52,9 @@ class DatabaseFragment : Fragment() {
             onDeleteClick = { item ->
                 viewModel.deleteWord(item)
             },
-            onTranslateClick = {item -> null}
+            onTranslateClick = {item -> null},
+
+            topics = emptyList()
         )
 
         recyclerView.adapter = adapter

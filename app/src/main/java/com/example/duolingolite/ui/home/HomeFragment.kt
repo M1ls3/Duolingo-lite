@@ -48,7 +48,8 @@ class HomeFragment : Fragment() {
             showTranslate = false,
             onEditClick = { /* Не використовується */ },
             onDeleteClick = { /* Не використовується */ },
-            onTranslateClick = { word -> toggleTranslation() }
+            onTranslateClick = { word -> toggleTranslation() },
+            topics = emptyList()
         )
         recyclerView.adapter = adapter
 
