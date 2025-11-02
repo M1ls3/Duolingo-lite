@@ -20,7 +20,7 @@ interface Dao  {
     suspend fun getAllWords(): List<Word>
 
     @Query("SELECT * FROM words ORDER BY RANDOM() LIMIT 1")
-    suspend fun getRandomWord(): Word
+    suspend fun getRandomWord(): Word?
 
     // Дополнительные методы для работы с topic (опционально)
     @Query("SELECT * FROM words WHERE topic = :topic ORDER BY word ASC")
@@ -28,6 +28,12 @@ interface Dao  {
 
     @Query("SELECT DISTINCT topic FROM words ORDER BY topic ASC")
     suspend fun getAllTopics(): List<String>
+
+    @Query("DELETE FROM words WHERE topic = :topic")
+    suspend fun deleteWordsByTopic(topic: String): Int
+
+    @Query("SELECT * FROM words WHERE topic = :topic ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomWordByTopic(topic: String): Word?
 
 //    @Query("SELECT * FROM words WHERE topic = :topic ORDER BY RANDOM() LIMIT 1")
 //    suspend fun getRandomWordByTopic(topic: String): Word?

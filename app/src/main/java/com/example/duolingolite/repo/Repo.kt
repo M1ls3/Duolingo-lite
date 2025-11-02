@@ -20,7 +20,7 @@ class Repo(private val dao: Dao) {
         return dao.getAllWords()
     }
 
-    suspend fun getRandomWord(): Word {
+    suspend fun getRandomWord(): Word? {
         return dao.getRandomWord()
     }
 
@@ -30,5 +30,13 @@ class Repo(private val dao: Dao) {
 
     suspend fun getAllTopics(): List<String>{
         return dao.getAllTopics()
+    }
+
+    suspend fun deleteWordsByTopic(topic: String): Int {
+        return dao.deleteWordsByTopic(topic)
+    }
+
+    suspend fun getRandomWordByTopic(topic: String): Word? {
+        return dao.getRandomWordByTopic(topic)
     }
 }

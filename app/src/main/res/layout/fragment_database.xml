@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp" >
 
     <Spinner
-        android:id="@+id/fragmentSpinner"
+        android:id="@+id/fragmentSpinnerDB"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

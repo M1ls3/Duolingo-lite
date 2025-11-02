@@ -17,8 +17,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val repo: Repo
 
     // LiveData для поточного випадкового слова
-    private val _currentWord = MutableLiveData<Word>()
-    val currentWord: LiveData<Word> get() = _currentWord
+    private val _currentWord = MutableLiveData<Word?>()
+    val currentWord: LiveData<Word?> get() = _currentWord
+
+    private val _allTopics = MutableLiveData<List<String>>()
+    val allTopics: LiveData<List<String>> get() = _allTopics
 
     init {
         // Приклад отримання Dao з бази даних (переконайтеся, що WordDatabase реалізовано)
@@ -34,6 +37,28 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 _currentWord.value = word
             } catch (e: Exception) {
                 // Обробка помилки (за потреби)
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun fetchRandomWord(topic: String) {
+        viewModelScope.launch {
+            try{
+                val word = repo.getRandomWordByTopic(topic)
+                _currentWord.value = word
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun loadAllTopics() {
+        viewModelScope.launch {
+            try {
+                val topics = repo.getAllTopics()
+                _allTopics.value = topics
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
