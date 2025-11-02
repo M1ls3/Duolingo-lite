@@ -103,19 +103,21 @@ class DatabaseFragment : Fragment() {
                         topic = currentTopic // Записываем текущий топик из спиннера
                     )
                     viewModel.insertWord(newWord)
+                    reloadCurrentTopicData()
                 } else {
                     // Обновляем существующее слово (топик остается прежним)
                     val updatedWord = item.copy(word = word, translate = translate)
                     viewModel.updateWord(updatedWord)
+                    reloadCurrentTopicData()
                 }
 
                 // ПОСЛЕ СОХРАНЕНИЯ ПЕРЕЗАГРУЖАЕМ СЛОВА ДЛЯ ТЕКУЩЕГО ТОПИКА
-                reloadCurrentTopicData()
+                //reloadCurrentTopicData()
 
                 dialog.dismiss()
             }
         }
-        reloadCurrentTopicData()
+        //reloadCurrentTopicData()
         dialog.show()
     }
 
