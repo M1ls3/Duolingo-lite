@@ -23,6 +23,9 @@ class DatabaseViewModel(application: Application) : AndroidViewModel(application
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     init {
         val wordDao = WordsDatabase.getDatabase(application).wordDao()
         repository = Repo(wordDao)
@@ -85,7 +88,7 @@ class DatabaseViewModel(application: Application) : AndroidViewModel(application
     }
 
     // Оновлення націоналізації та країн
-    fun updateWord(word: Word) {
+    suspend fun updateWord(word: Word) {
         viewModelScope.launch {
             try {
                 repository.updateWord(word)
@@ -108,11 +111,10 @@ class DatabaseViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun insertWord(word: Word) {
+    suspend fun insertWord(word: Word) {
         viewModelScope.launch {
             try {
                 repository.insertWord(word)
-                //loadItems()
             } catch (e: Exception) {
                 _errorMessage.postValue("Error insert data: ${e.message}")
             }

@@ -10,12 +10,17 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.duolingolite.R
 import com.example.duolingolite.adapter.WordAdapter
 import com.example.duolingolite.data.Word
 import com.example.duolingolite.databinding.FragmentDatabaseBinding
 import com.example.duolingolite.factory.WordViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DatabaseFragment : Fragment() {
 
@@ -29,7 +34,7 @@ class DatabaseFragment : Fragment() {
     private lateinit var adapter: WordAdapter
     private lateinit var spinnerAdapter: ArrayAdapter<String>
 
-    private var currentTopic: String = "Default"
+    var currentTopic: String = "Default"
     private val topics = mutableListOf("Default")
 
     override fun onCreateView(
@@ -62,7 +67,7 @@ class DatabaseFragment : Fragment() {
         adapter = WordAdapter(
             items = emptyList(),
             onEditClick = { showEditDialog(it) },
-            onDeleteClick = { viewModel.deleteWord(it) },
+            onDeleteClick = { deleteWord(it) },
             onTranslateClick = { }
         )
         binding.fragmentRecyclerView.adapter = adapter
@@ -85,7 +90,9 @@ class DatabaseFragment : Fragment() {
             .create()
 
         dialog.setOnShowListener {
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val saveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+            saveButton.setOnClickListener {
                 val word = wordEditText.text.toString().trim()
                 val translate = translateEditText.text.toString().trim()
 
@@ -95,29 +102,51 @@ class DatabaseFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-                if (item == null) {
-                    // СОЗДАЕМ НОВОЕ СЛОВО С ВЫБРАННЫМ ТОПИКОМ
-                    val newWord = Word(
-                        word = word,
-                        translate = translate,
-                        topic = currentTopic // Записываем текущий топик из спиннера
-                    )
-                    viewModel.insertWord(newWord)
-                    reloadCurrentTopicData()
-                } else {
-                    // Обновляем существующее слово (топик остается прежним)
-                    val updatedWord = item.copy(word = word, translate = translate)
-                    viewModel.updateWord(updatedWord)
-                    reloadCurrentTopicData()
+                // Блокируем кнопку на время сохранения
+                saveButton.isEnabled = false
+                saveButton.text = "Saving..."
+
+                // Запускаем в корутине чтобы дождаться завершения
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        if (item == null) {
+                            // СОЗДАЕМ НОВОЕ СЛОВО
+                            val newWord = Word(
+                                word = word,
+                                translate = translate,
+                                topic = currentTopic
+                            )
+                            viewModel.insertWord(newWord) // Ждем завершения
+                        } else {
+                            // ОБНОВЛЯЕМ СУЩЕСТВУЮЩЕЕ СЛОВО
+                            val updatedWord = item.copy(word = word, translate = translate)
+                            viewModel.updateWord(updatedWord) // Ждем завершения
+                        }
+
+                        // ДАЕМ НЕМНОГО ВРЕМЕНИ БАЗЕ ДАННЫХ НА ОБРАБОТКУ
+                        delay(100)
+
+                        // ТЕПЕРЬ ПЕРЕЗАГРУЖАЕМ ДАННЫЕ
+                        reloadCurrentTopicData()
+
+                        // Закрываем диалог после успешного сохранения
+                        withContext(Dispatchers.Main) {
+                            dialog.dismiss()
+                            showToast("Saved successfully!")
+                        }
+
+                    } catch (e: Exception) {
+                        // В случае ошибки разблокируем кнопку
+                        withContext(Dispatchers.Main) {
+                            saveButton.isEnabled = true
+                            saveButton.text = "Save"
+                            showToast("Error: ${e.message}")
+                        }
+                    }
                 }
-
-                // ПОСЛЕ СОХРАНЕНИЯ ПЕРЕЗАГРУЖАЕМ СЛОВА ДЛЯ ТЕКУЩЕГО ТОПИКА
-                //reloadCurrentTopicData()
-
-                dialog.dismiss()
             }
         }
-        //reloadCurrentTopicData()
+
         dialog.show()
     }
 
@@ -253,6 +282,28 @@ class DatabaseFragment : Fragment() {
                 .show()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun deleteWord(word: Word) {
+
+        // Запускаем в корутине чтобы дождаться завершения
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                viewModel.deleteWord(word) // Ждем завершения удаления
+
+                // Даем немного времени базе данных на обработку
+                delay(100)
+
+                // Перезагружаем данные
+                reloadCurrentTopicData()
+
+                // Показываем сообщение об успехе
+                showToast("Word deleted successfully")
+
+            } catch (e: Exception) {
+                showToast("Error deleting word: ${e.message}")
+            }
         }
     }
 
